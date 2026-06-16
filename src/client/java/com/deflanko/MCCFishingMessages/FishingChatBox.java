@@ -122,7 +122,7 @@ public class FishingChatBox {
         context.fill(boxX, boxY, boxX + boxWidth, boxY + boxHeight, BACKGROUND_COLOR);
 
         //unfocus the box with chat unfocused
-        if (focused && !client.gui.getChat().isChatFocused()) {
+        if (focused && !client.gui.hud.getChat().isChatFocused()) {
             focused = false;
             scrollOffset = 0; //reset scroll offset to 0 to warp box back to the bottom
             if (state != EditState.NONE) {
@@ -188,7 +188,7 @@ public class FishingChatBox {
         drawBorder(context, boxX, boxY + 16, boxWidth, 1, 0xFFFFFFFF);
 
         // Check if mouse is hovering over icon
-        if (client.gui.getChat().isChatFocused() && mouseX >= iconX * guiScaleFactor && mouseX <= iconX * guiScaleFactor + client.font.width(COPY_ICON) &&
+        if (client.gui.hud.getChat().isChatFocused() && mouseX >= iconX * guiScaleFactor && mouseX <= iconX * guiScaleFactor + client.font.width(COPY_ICON) &&
                 mouseY >= (boxY + 5) * guiScaleFactor && mouseY <= (boxY + 5 + 9) * guiScaleFactor) {
             context.fill(iconX, boxY + 5, iconX + client.font.width(COPY_ICON), boxY + 14, 0xAAFFFFFF);
         }
@@ -237,7 +237,7 @@ public class FishingChatBox {
         //matrices.translate(originalX, originalY); // Reset position
         //check for hover text
 
-        if (visible && client.gui.getChat().isChatFocused() && MouseWithinBox(mouseX, mouseY)) {
+        if (visible && client.gui.hud.getChat().isChatFocused() && MouseWithinBox(mouseX, mouseY)) {
             int i = (int) Math.floor((mouseY / guiScaleFactor)) - boxY - 17 + (int) Math.floor((MESSAGE_HEIGHT * fontSize) / 2);
             int lineIndex = (int) (i / fontSize) / MESSAGE_HEIGHT;
             lineIndex -= (maxVisibleMessages - Math.min(onScreenMessages.size(), maxVisibleMessages));
@@ -314,7 +314,7 @@ public class FishingChatBox {
     }
 
     public void addMessage(Component message, @Nullable MessageSignature signatureData, GuiMessageSource source, @Nullable GuiMessageTag indicator) {
-        messages.addFirst(new ChatMessage(new GuiMessage(client.gui.getGuiTicks(), message, signatureData, source, indicator)));
+        messages.addFirst(new ChatMessage(new GuiMessage(client.gui.hud.getGuiTicks(), message, signatureData, source, indicator)));
         while (messages.size() > MAX_MESSAGES) {
             messages.removeLast();
         }
@@ -411,7 +411,7 @@ public class FishingChatBox {
         // Original focus check
         focused = visible &&
                 MouseWithinBox(mouseX, mouseY) &&
-                button == 0 && client.gui.getChat().isChatFocused();
+                button == 0 && client.gui.hud.getChat().isChatFocused();
         if (!focused) {
             scrollOffset = 0;
             state = EditState.NONE;

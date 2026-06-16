@@ -8,6 +8,7 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.projectile.FishingHook;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.phys.AABB;
+import net.minecraft.world.phys.Vec3;
 
 
 import java.util.Arrays;
@@ -74,7 +75,7 @@ public class FishingSpot{
     private static void getFishingSpot(Player player, FishingHook fishHook) {
 
         BlockPos blockPos = fishHook.blockPosition();
-        AABB box = AABB.ofSize(blockPos.getCenter(), 3.5, 6.0, 3.5);
+        AABB box = AABB.ofSize(Vec3.atCenterOf(blockPos), 3.5, 6.0, 3.5);
         //List<Entity> entities = player.getWorld().getOtherEntities(null, box)
         //New for 1.21.11
         List<Entity> entities = Minecraft.getInstance().level.getEntities(null, box)
